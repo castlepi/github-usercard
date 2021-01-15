@@ -20,12 +20,12 @@ console.log(axios.get(URL));
     and append the returned markup to the DOM as a child of .cards
 */
 const cards = document.querySelector(".cards");
-console.log(cards);
+// console.log(cards);
 axios
   .get(URL)
   .then((res) => {
     const gitHubUser = res.data;
-    console.log(userGitHub(gitHubUser));
+    // console.log(userGitHub(gitHubUser));
     cards.appendChild(userGitHub(gitHubUser));
   })
   .catch((err) => {
@@ -42,7 +42,28 @@ axios
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+];
+
+followersArray.forEach((follower) => {
+  const newUser = `https://api.github.com/users/${follower}`;
+
+  axios
+    .get(newUser)
+    .then((res) => {
+      const gHUser = res.data;
+      console.log(gHUser);
+      cards.appendChild(userGitHub(gHUser));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
